@@ -45,6 +45,7 @@ class Raquete {
         } else {
             image(computadorImagem, this.x, this.y, this.w, this.h);
         }
+
     }
 }
 
@@ -71,9 +72,11 @@ class Bola {
         this.angulo += Math.sqrt(this.vx * this.vx + this.vy * this.vy) / 30;
         
         if (this.x < this.r || this.x > width - this.r) {
+            // se a bola saiu pela esquerda, o computador fez ponto
             if (this.x < this.r) {
                 pontosComputador++;
             } else {
+                // se a bola saiu pela direita, o jogador fez ponto
                 pontosJogador++;
             }
             golSom.play();
@@ -127,23 +130,21 @@ let jogador;
 let computador;
 
 function falaPontos() {
-    // use speechapi
-    if('speechSynthesis' in window) {
-        const pontuacao = "Pontuação é " + pontosJogador + " a " + pontosComputador;
-        console.log(pontuacao);
-        const msg = new SpeechSynthesisUtterance(pontuacao);
-        msg.lang = 'pt-BR';
-        window.speechSynthesis.speak(msg);
-    }
+    //use a speechapi in pt-br
+    let msg = new SpeechSynthesisUtterance();
+    msg.lang = 'pt-BR';
+    msg.text = `Pontos do jogador ${pontosJogador} e pontos do computador ${pontosComputador}`;
+    window.speechSynthesis.speak(msg);
+    
 }
 
 function preload() {
-    bolaImagem = loadImage('bola.png');
-    jogadorImagem = loadImage('barra01.png');
-    computadorImagem = loadImage('barra02.png');
-    fundoImagem = loadImage('fundo2.png');
-    quicarSom = loadSound('446100__justinvoke__bounce.wav');
-    golSom = loadSound('274178__littlerobotsoundfactory__jingle_win_synth_02.wav');
+    bolaImagem = loadImage('images/bola.png');
+    jogadorImagem = loadImage('images/barra01.png');
+    computadorImagem = loadImage('images/barra02.png');
+    fundoImagem = loadImage('images/fundo2.png');
+    quicarSom = loadSound('audios/quicarSom.wav');
+    golSom = loadSound('audios/golSom.wav');
 }
 
 function setup() {
